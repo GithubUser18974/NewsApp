@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="api_key">3efa889f-92e6-4b77-ad9c-9b3942bea342</string>
+    <string name="news_number">news_number</string>
+    <string name="static_news_no">10</string>
+    <string name="order_by">order-by</string>
+    <string name="static_order_by">newest</string>
+    <string name="politics">politics</string>
+    <string name="environment">environment</string>
+    <string name="sport">sport</string>
+    <string name="fim">film</string>
+</resources>
