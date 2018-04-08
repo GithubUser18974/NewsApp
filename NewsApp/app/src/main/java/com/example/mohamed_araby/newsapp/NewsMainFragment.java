@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,9 @@ public class NewsMainFragment extends Fragment implements LoaderManager.LoaderCa
             "http://content.guardianapis.com/search";
     private final int LOADER_ID = 1;
     private NewsAdapter newsAdapter;
-
+    private TextView networkState;
     private boolean isConnected;
-
+    private ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.main_fragment, null);
@@ -45,11 +47,18 @@ public class NewsMainFragment extends Fragment implements LoaderManager.LoaderCa
         isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
         LoaderManager loaderManager = getLoaderManager();
         ListView listView = view.findViewById(R.id.news_list);
+        networkState=(TextView) view.findViewById(R.id.network_state);
+        progressBar = view.findViewById(R.id.progress_bar);
         newsAdapter = new NewsAdapter(getActivity(), new ArrayList<NewsData>());
         listView.setAdapter(newsAdapter);
+        listView.setEmptyView(networkState);
 
         if (isConnected) {
             loaderManager.initLoader(LOADER_ID, null, this);
+        }else{
+            networkState.setText(R.string.no_internet);
+            progressBar.setVisibility(View.GONE);
+
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,6 +102,8 @@ public class NewsMainFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<List<NewsData>> loader, List<NewsData> events) {
+        progressBar.setVisibility(View.GONE);
+        networkState.setText(R.string.no_news);
         newsAdapter.clear();
         if (events != null && !events.isEmpty())
             newsAdapter.addAll(events);

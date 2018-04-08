@@ -9,4 +9,6 @@
     <string name="environment">environment</string>
     <string name="sport">sport</string>
     <string name="fim">film</string>
+    <string name="no_internet">Please check your internet connection :)</string>
+    <string name="no_news">Sorry no News to show :( </string>
 </resources>
